@@ -1,3 +1,5 @@
+import java.awt.Graphics;
+
 public class <class_name> implements Runnable {
 
 	private Thread gameThread;
@@ -20,8 +22,6 @@ public class <class_name> implements Runnable {
 
 		double timePerFrame = 1000000000.0 / FPS_SET;
 		double timePerUpdate = 1000000000.0 / UPS_SET;
-		long lastFrame = System.nanoTime();
-		long now = System.nanoTime();
 
 		long previousFrame = System.nanoTime();
 
@@ -30,25 +30,26 @@ public class <class_name> implements Runnable {
 		long lastCheck = System.currentTimeMillis();
 
 		double deltaU = 0;
+		double deltaF = 0;
 
 		while (gameThread != null) {
 
-			now = System.nanoTime();
 			long currentTime = System.nanoTime();
 			
 			deltaU += (currentTime - previousTime) / timePerUpdate;
+			deltaF += (currentTime - previousTime) / timePerFrame;
 			previousTime = currentTime;
 			
 			if (deltaU >= 1) {
-				// update();
+				//update();
 				updates++;
 				deltaU--;
 			}
-
-			if (now - lastFrame >= timePerFrame) {
-				gamePanel.repaint();
-				lastFrame = now;
+			
+			if (deltaF >= 1) {
+				//repaint();
 				frames++;
+				deltaF--;
 			}
 
 			if (System.currentTimeMillis() - lastCheck >= 1000) {
